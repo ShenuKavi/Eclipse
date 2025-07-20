@@ -1,0 +1,150 @@
+/* ─────────── GALAXY BACKDROP ─────────── */
+.hero {
+  width: 100vw;
+  min-height: 100vh;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+
+  /* Rich galaxy blend: nebula pink, cosmic violet, deep space blue */
+  background:
+    radial-gradient(circle at 20% 40%, rgba(143, 102, 255, 0.3), transparent 25%),
+    radial-gradient(circle at 80% 60%, rgba(255, 144, 203, 0.25), transparent 30%),
+    linear-gradient(180deg, #1a1342 0%, #0f112e 35%, #070418 100%);
+}
+
+
+/* ★★ ENHANCED STARFIELD ★★
+   - ::before  = bright + BIG glowing stars (no fade‑out)
+   - ::after   = smaller twinkling stars for depth
+------------------------------------------------------------------- */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-repeat: repeat;
+  animation: starScroll 80s linear infinite;
+}
+
+/* FRONT layer – large glowing stars that stay bright */
+.hero::before {
+  /* soft halo via drop‑shadow */
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.7))
+          drop-shadow(0 0 12px rgba(180,150,255,0.35));
+
+  background-image:
+    /* ★★ BIG white stars */
+    radial-gradient(6px 6px at 40% 12%, rgba(255,255,255,1) 0%, transparent 60%),
+    radial-gradient(5px 5px at 22% 68%, rgba(255,255,255,0.95) 0%, transparent 65%),
+    radial-gradient(4px 4px at 78% 38%, rgba(255,255,255,0.9) 0%, transparent 65%),
+    /* softly‑coloured giants */
+    radial-gradient(6px 6px at 60% 82%, rgba(173,216,230,0.9) 0%, transparent 60%), /* icy blue */
+    radial-gradient(5px 5px at 10% 48%, rgba(255,182,193,0.9) 0%, transparent 60%), /* blush pink */
+    /* sprinkle of regular bright stars (unchanged) */
+    radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.9) 0%, transparent 100%),
+    radial-gradient(2px 2px at 25% 85%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 70% 50%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px   at 85% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px   at 55% 65%, rgba(255,255,255,0.5) 0%, transparent 100%);
+}
+
+/* BACK layer – faint stars with gentle twinkle */
+.hero::after {
+  animation: starScroll 120s linear infinite,
+             twinkle    6s  ease-in-out infinite;       /* slower, softer */
+  background-image:
+    radial-gradient(1.2px 1.2px at 15% 25%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1.2px 1.2px at 75% 75%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px   1px   at 45% 60%, rgba(255,255,255,0.18) 0%, transparent 100%),
+    radial-gradient(1.2px 1.2px at 35% 15%, rgba(135,206,250,0.18) 0%, transparent 100%);
+}
+
+/* Upward drift for both layers */
+@keyframes starScroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-1000px); }
+}
+
+/* Soft twinkle that never goes totally dark */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.9; }
+  40%, 60% { opacity: 0.6; }
+}
+
+/* ─────────── FLEX WRAPPER ─────────── */
+.hero__inner {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1; /* above stars */
+}
+
+@media (max-width: 768px) {
+  .hero__inner { flex-direction: column; text-align: center; }
+  .hero__eclipse { margin-top: 2.5rem; }
+}
+
+/* ─────────── COPY BLOCK ─────────── */
+.hero__copy { max-width: 540px; }
+
+.hero__copy h1 {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.hero__copy p {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.hero__copy button {
+  padding: 0.75rem 1.8rem;
+  border: none;
+  border-radius: 10px;
+  background: #9080ff;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.hero__copy button:hover { background: #a79aff; }
+
+/* ─────────── GLOWING MOON ─────────── */
+.hero__eclipse {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: radial-gradient(
+      circle at 50% 50%,
+      #ffd032 0%,
+      #ffd032 55%,
+      rgba(255,208,50,0.45) 75%,
+      transparent 85%
+    );
+  box-shadow:
+    0 0 80px 30px rgba(255,208,50,0.35),
+    0 0 160px 60px rgba(255,208,50,0.18);
+}
+
+/* DARK DISC (animated by Framer Motion) */
+.eclipse__shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #0f112e; /* matches sky */
+}

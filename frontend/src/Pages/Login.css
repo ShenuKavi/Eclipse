@@ -1,0 +1,230 @@
+/* --------------------------------------------- */
+/*              Galaxy Hero Backdrop             */
+/* --------------------------------------------- */
+.login-hero {
+  width: 100vw;
+  min-height: 100vh;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(circle at 20% 40%, rgba(143, 102, 255, 0.3), transparent 25%),
+    radial-gradient(circle at 80% 60%, rgba(255, 144, 203, 0.25), transparent 30%),
+    linear-gradient(180deg, #1a1342 0%, #0f112e 35%, #070418 100%);
+}
+
+/* --------------------------------------------- */
+/*                  Starfield Layer              */
+/* --------------------------------------------- */
+.login-hero::before,
+.login-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-repeat: repeat;
+  animation: starScroll 80s linear infinite;
+}
+
+.login-hero::before {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7))
+          drop-shadow(0 0 12px rgba(180, 150, 255, 0.35));
+  background-image:
+    radial-gradient(2px 2px at 40% 12%, rgba(255, 255, 255, 0.9), transparent 60%),
+    radial-gradient(1.5px 1.5px at 22% 68%, rgba(255, 255, 255, 0.8), transparent 65%),
+    radial-gradient(1px 1px at 78% 38%, rgba(255, 255, 255, 0.7), transparent 65%);
+}
+
+.login-hero::after {
+  animation: starScroll 120s linear infinite, twinkle 6s ease-in-out infinite;
+  background-image:
+    radial-gradient(1px 1px at 15% 25%, rgba(255, 255, 255, 0.25), transparent 100%),
+    radial-gradient(1px 1px at 75% 75%, rgba(255, 255, 255, 0.2), transparent 100%);
+}
+
+/* --------------------------------------------- */
+/*                  Layout Content               */
+/* --------------------------------------------- */
+.login__inner {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  gap: 4rem;
+}
+
+.login__copy {
+  max-width: 480px;
+}
+
+.login__copy h1 {
+  font-size: 2.4rem;
+  line-height: 1.25;
+  margin-bottom: 1.8rem;
+  font-weight: 700;
+  color: #f8bfa4;
+  max-width: 480px;
+  padding-top: 1.5rem;
+  text-shadow: 0 0 8px #8261c2;
+}
+
+.login__copy h1 span {
+  font-size: 0.85em;
+  display: inline-block;
+  margin-top: 0.3rem;
+}
+
+/* --------------------------------------------- */
+/*                   Form Styling                */
+/* --------------------------------------------- */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.form-group label {
+  font-size: 1rem;
+  color: #d1c4e9;
+  text-align: left;
+}
+
+.login-form input {
+  padding: 0.9rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #8261c2;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: #f8bfa4;
+  box-shadow: 0 0 10px rgba(248, 191, 164, 0.3);
+}
+
+.login-form button {
+  padding: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  background: #9080ff;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.login-form button:hover {
+  background: #a79aff;
+}
+
+/* --------------------------------------------- */
+/*                   Extra Links                 */
+/* --------------------------------------------- */
+.login-links {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.login-links a {
+  color: #f8bfa4;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.login-links a:hover {
+  text-shadow: 0 0 6px #e3a6c5;
+}
+
+/* --------------------------------------------- */
+/*               Animated Eclipse                */
+/* --------------------------------------------- */
+.hero__eclipse {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: radial-gradient(
+    circle at 50% 50%,
+    #ffd032 0%,
+    #ffd032 55%,
+    rgba(255, 208, 50, 0.45) 75%,
+    transparent 85%
+  );
+  box-shadow:
+    0 0 60px 20px rgba(255, 208, 50, 0.3),
+    0 0 120px 40px rgba(255, 208, 50, 0.15);
+}
+
+.eclipse__shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #0f112e;
+}
+
+/* --------------------------------------------- */
+/*                 Responsive Design             */
+/* --------------------------------------------- */
+@media (max-width: 768px) {
+  .login__inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 3rem;
+  }
+
+  .login__copy {
+    order: 2;
+    max-width: 100%;
+  }
+
+  .hero__eclipse {
+    order: 1;
+    width: 240px;
+    height: 240px;
+    margin-bottom: 1.5rem;
+  }
+
+  .login__copy h1 {
+    font-size: 2rem;
+  }
+
+  .form-group label {
+    text-align: center;
+  }
+}
+
+/* --------------------------------------------- */
+/*               Keyframe Animations             */
+/* --------------------------------------------- */
+@keyframes starScroll {
+  from { transform: translateY(0); }
+  to { transform: translateY(-1000px); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.9; }
+  40%, 60% { opacity: 0.6; }
+}

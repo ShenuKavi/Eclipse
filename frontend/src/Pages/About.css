@@ -1,0 +1,219 @@
+.about-hero {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  /* Deep‑space gradient + subtle nebulae */
+  background:
+    radial-gradient(circle at 25% 30%, rgba(136,104,255,0.25), transparent 45%),
+    radial-gradient(circle at 70% 70%, rgba(255,135,208,0.2), transparent 50%),
+    #0b0c2b;
+}
+
+/* Starfield layers (scroll + twinkle) */
+.about-hero::before,
+.about-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-repeat: repeat;
+  animation: starScroll 90s linear infinite;
+}
+.about-hero::before {
+  background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+  opacity: 0.25;
+}
+.about-hero::after {
+  background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+  opacity: 0.15;
+  animation-direction: reverse;
+}
+
+@keyframes starScroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-1500px); }
+}
+
+/* ═════════ Floating Particles ═════════ */
+.floating-particle {
+  position: absolute;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(255,255,255,0.8);
+  animation: float 14s ease-in-out infinite;
+}
+@keyframes float {
+  0%   { transform: translateY(0)     rotate(0deg); }
+  50%  { transform: translateY(-20px) rotate(180deg); }
+  100% { transform: translateY(0)     rotate(360deg); }
+}
+
+/* ═════════ Large Glowing Stars ═════════ */
+.large-star {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff, #a6a6ff 30%, transparent 60%);
+  box-shadow:
+    0 0 10px 3px #c2baff,
+    0 0 20px 6px #9988ff88,
+    0 0 30px 12px #6655ff55;
+  opacity: 0.8;
+  animation: pulseGlow 3.5s ease-in-out infinite;
+  pointer-events: none;
+  filter: drop-shadow(0 0 5px #a6a6ff);
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px #a6a6ff);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 12px #d6d6ff);
+  }
+}
+
+/* Example large stars placed randomly */
+.large-star.one {
+  width: 40px;
+  height: 40px;
+  top: 15%;
+  left: 10%;
+  animation-delay: 0s;
+}
+.large-star.two {
+  width: 55px;
+  height: 55px;
+  top: 45%;
+  left: 70%;
+  animation-delay: 1.5s;
+}
+.large-star.three {
+  width: 30px;
+  height: 30px;
+  top: 75%;
+  left: 30%;
+  animation-delay: 3s;
+}
+
+/* ═════════ Content wrapper ═════════ */
+.about-content {
+  backdrop-filter: blur(10px) saturate(150%);
+  background: rgba(12, 10, 35, 0.6);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 24px;
+  padding: clamp(2rem, 5vw, 3.5rem);
+  max-width: 960px;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Headings & typography */
+.about-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: #eebdff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 15px rgba(190,140,255,0.8);
+  animation: titleGlow 4s ease-in-out infinite alternate;
+}
+@keyframes titleGlow {
+  from { text-shadow: 0 0 8px rgba(190,140,255,0.8); }
+  to   { text-shadow: 0 0 18px rgba(255,190,250,0.9); }
+}
+
+.about-description {
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  line-height: 1.7;
+  margin: 0 auto 2.5rem;
+  max-width: 740px;
+  text-align: center;
+  color: #f3e9ff;
+}
+
+/* ═════════ Team grid ═════════ */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2.5rem;
+}
+
+.member-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.member-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(255,174,232,0.25);
+}
+
+.photo-wrapper {
+  margin: 0 auto 1rem;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #eebdff;
+  box-shadow: 0 0 12px rgba(198,125,255,0.4);
+}
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.member-name {
+  margin-top: 0.7rem;
+  font-size: 1.2rem;
+  color: #ffd1f6;
+  font-weight: 600;
+}
+.member-role {
+  font-size: 0.95rem;
+  color: #d3c5ff;
+}
+
+/* ═════════ Mission / Vision blocks ═════════ */
+.mission-block {
+  margin: 2.8rem auto 0;
+  max-width: 680px;
+  padding: 1.8rem 1.4rem;
+  border-left: 4px solid #c182ff;
+  background: rgba(255,255,255,0.07);
+  border-radius: 14px;
+}
+.mission-block h3 {
+  color: #ffd1f6;
+  font-size: 1.6rem;
+  margin-bottom: 0.8rem;
+}
+.mission-block p {
+  font-size: 1.05rem;
+  color: #f3e9ff;
+  line-height: 1.7;
+  text-align: center;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .about-content {
+    padding: 1.8rem 1.2rem;
+  }
+  .mission-block {
+    border-left: none;
+    border-top: 3px solid #c182ff;
+  }
+}
