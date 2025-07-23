@@ -17,7 +17,6 @@ const Journal = () => {
   const [isWriting, setIsWriting] = useState(false);
   const [showForm, setShowForm] = useState(true);
 
-  // Save entries to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('journalEntries', JSON.stringify(entries));
   }, [entries]);
@@ -81,7 +80,7 @@ const Journal = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h1>Shadow to Light <span className="transition-icon">🌓</span></h1>
+        <h1>Shadow to Light <span className="transition-icon">🌑</span></h1>
         <p>Document your journey from darkness to illumination</p>
       </motion.div>
 
@@ -198,7 +197,7 @@ const Journal = () => {
                       onChange={handleInputChange}
                       placeholder="Express your thoughts freely..."
                       className="form-textarea"
-                      rows="5"
+                      rows="3"
                     />
                   </div>
                   
@@ -258,15 +257,125 @@ const Journal = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              <div className="light-symbol">
-                <div className="light-rays">
-                  <div className="ray"></div>
-                  <div className="ray"></div>
-                  <div className="ray"></div>
-                  <div className="ray"></div>
-                  <div className="ray"></div>
-                  <div className="ray"></div>
-                </div>
+              <div className="book-svg">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="coverGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#1a1342" />
+                      <stop offset="100%" stopColor="#8261c2" />
+                    </linearGradient>
+                    <linearGradient id="pageGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#f8bfa4" />
+                      <stop offset="100%" stopColor="#f8f8f8" />
+                    </linearGradient>
+                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+                      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0" result="glow" />
+                      <feBlend in="SourceGraphic" in2="glow" mode="screen" />
+                    </filter>
+                  </defs>
+                  
+                  {/* Book Spine */}
+                  <motion.path 
+                    d="M65,30 L65,170 C65,170 70,175 100,175 L135,175 C160,175 170,165 170,150 L170,50 C170,35 160,25 135,25 L100,25 C70,25 65,30 65,30 Z" 
+                    fill="url(#coverGradient)"
+                    stroke="#f8bfa4"
+                    strokeWidth="1"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
+                  />
+                  
+                  {/* Pages with subtle curve */}
+                  <motion.path 
+                    d="M70,35 C60,45 60,155 70,165 L130,165 C140,155 140,45 130,35 Z" 
+                    fill="url(#pageGradient)"
+                    stroke="#d1c4e9"
+                    strokeWidth="0.5"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 0.3 }}
+                  />
+                  
+                  {/* Front Cover with depth */}
+                  <motion.path 
+                    d="M70,35 L130,35 C140,45 140,155 130,165 L70,165 C60,155 60,45 70,35 Z" 
+                    fill="url(#coverGradient)"
+                    stroke="#f8bfa4"
+                    strokeWidth="1"
+                    filter="url(#glow)"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 0.6 }}
+                  />
+                  
+                  {/* Page lines */}
+                  <motion.path 
+                    d="M85,40 L125,40" 
+                    stroke="#d1c4e9"
+                    strokeWidth="0.5"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.5, delay: 1.2 }}
+                  />
+                  <motion.path 
+                    d="M85,50 L125,50" 
+                    stroke="#d1c4e9"
+                    strokeWidth="0.5"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.5, delay: 1.4 }}
+                  />
+                  <motion.path 
+                    d="M85,60 L125,60" 
+                    stroke="#d1c4e9"
+                    strokeWidth="0.5"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.5, delay: 1.6 }}
+                  />
+                  <motion.path 
+                    d="M85,70 L125,70" 
+                    stroke="#d1c4e9"
+                    strokeWidth="0.5"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 0.5, delay: 1.8 }}
+                  />
+                  
+                  {/* Glowing light effect */}
+                  <motion.circle 
+                    cx="100" 
+                    cy="100" 
+                    r="40" 
+                    fill="none" 
+                    stroke="#f8bfa4" 
+                    strokeWidth="1"
+                    strokeOpacity="0.3"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 0.3 }}
+                    transition={{ duration: 2, delay: 2.2 }}
+                  />
+                  
+                  {/* Sparkle elements */}
+                  <motion.g
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 2.5 }}
+                  >
+                    <path 
+                      d="M90,85 L95,90 L100,85 L95,80 Z" 
+                      fill="#f8bfa4" 
+                      transform="rotate(45,95,85)"
+                    />
+                    <path 
+                      d="M110,120 L115,125 L120,120 L115,115 Z" 
+                      fill="#8261c2" 
+                      transform="rotate(45,115,120)"
+                    />
+                    <circle cx="130" cy="70" r="2" fill="#f8bfa4" />
+                  </motion.g>
+                </svg>
               </div>
               <h2>Welcome to Shadow to Light</h2>
               <p>This is your private sanctuary to document your journey from darkness to illumination.</p>
@@ -292,6 +401,7 @@ const Journal = () => {
       <div className="particle particle-2"></div>
       <div className="particle particle-3"></div>
       <div className="particle particle-4"></div>
+      <div className="particle particle-5"></div>
     </div>
   );
 };

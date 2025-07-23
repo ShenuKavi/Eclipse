@@ -97,6 +97,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  align-self: flex-start;
 }
 
 .new-entry-card {
@@ -226,11 +227,16 @@
   box-shadow: 0 0 20px rgba(130, 97, 194, 0.3);
   backdrop-filter: blur(5px);
   min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .journal-form-container {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .journal-form-container.visible {
@@ -323,7 +329,7 @@
 
 .form-textarea {
   resize: vertical;
-  min-height: 250px;
+  min-height: 180px;
 }
 
 /* Mood Selector */
@@ -376,7 +382,8 @@
 .entry-actions {
   display: flex;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
 }
 
 .save-btn, .cancel-btn, .delete-btn {
@@ -459,6 +466,8 @@
   background: rgba(255, 255, 255, 0.03);
   border-radius: 10px;
   white-space: pre-wrap;
+  overflow-y: auto;
+  max-height: 400px;
 }
 
 .welcome-message {
@@ -469,60 +478,36 @@
   align-items: center;
   text-align: center;
   padding: 2rem;
+  width: 100%;
 }
 
-.light-symbol {
-  width: 150px;
-  height: 150px;
-  position: relative;
+/* Updated book styles */
+.book-svg {
+  width: 220px;
+  height: 220px;
   margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  filter: drop-shadow(0 0 15px rgba(248, 191, 164, 0.5));
 }
 
-.light-symbol::before {
-  content: '';
-  position: absolute;
+.book-svg svg {
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle, #f8bfa4, transparent 70%);
-  border-radius: 50%;
-  animation: pulse 4s infinite ease-in-out;
+  animation: float 8s infinite ease-in-out;
 }
 
-.light-symbol::after {
-  content: '';
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  background: radial-gradient(circle, #ffd700, #f8bfa4);
-  border-radius: 50%;
-  box-shadow: 0 0 30px rgba(248, 191, 164, 0.7);
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
 }
 
-.light-rays {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
 }
 
-.ray {
-  position: absolute;
-  width: 4px;
-  height: 150px;
-  background: linear-gradient(to bottom, rgba(248, 191, 164, 0.8), transparent);
-  left: 50%;
-  top: 50%;
-  transform-origin: top center;
+.book-svg circle[stroke="#f8bfa4"] {
+  animation: pulse-glow 4s infinite ease-in-out;
 }
-
-.ray:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg); }
-.ray:nth-child(2) { transform: translate(-50%, -50%) rotate(30deg); }
-.ray:nth-child(3) { transform: translate(-50%, -50%) rotate(60deg); }
-.ray:nth-child(4) { transform: translate(-50%, -50%) rotate(90deg); }
-.ray:nth-child(5) { transform: translate(-50%, -50%) rotate(120deg); }
-.ray:nth-child(6) { transform: translate(-50%, -50%) rotate(150deg); }
 
 .welcome-message h2 {
   color: #f8bfa4;
@@ -619,6 +604,17 @@
   animation-duration: 22s;
 }
 
+.particle-5 {
+  width: 12px;
+  height: 2px;
+  background: rgba(248, 191, 164, 0.8);
+  top: 65%;
+  left: 85%;
+  animation: comet 12s infinite linear;
+  transform: rotate(-45deg);
+  border-radius: 50%;
+}
+
 /* Animations */
 @keyframes starScroll {
   from { transform: translateY(0); }
@@ -637,32 +633,55 @@
   50% { transform: scale(1.1); opacity: 1; }
 }
 
+@keyframes comet {
+  0% { transform: translateX(-100vw) rotate(-45deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateX(100vw) rotate(-45deg); opacity: 0; }
+}
+
 /* Responsive design */
 @media (max-width: 900px) {
   .journal-content {
     flex-direction: column;
+    align-items: center;
   }
   
   .journal-sidebar {
     max-width: 100%;
+    width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    align-self: center;
   }
   
   .new-entry-card {
     flex: 1;
     min-width: 250px;
+    max-width: 350px;
   }
   
   .entries-list {
     flex: 2;
     min-width: 300px;
+    max-width: 100%;
+  }
+  
+  .journal-main {
+    width: 100%;
+  }
+  
+  .entry-actions {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 
 @media (max-width: 600px) {
   .journal-container {
     padding: 1.5rem;
+    padding-top: calc(80px + 1.5rem);
   }
   
   .journal-header h1 {
@@ -671,6 +690,11 @@
   
   .journal-sidebar {
     flex-direction: column;
+    align-items: center;
+  }
+  
+  .new-entry-card {
+    width: 100%;
   }
   
   .entry-actions {
@@ -686,13 +710,12 @@
     font-size: 1.8rem;
   }
   
-  .light-symbol {
-    width: 120px;
-    height: 120px;
+  .book-svg {
+    width: 180px;
+    height: 180px;
   }
   
-  .light-symbol::after {
-    width: 60px;
-    height: 60px;
+  .form-textarea {
+    min-height: 150px;
   }
 }

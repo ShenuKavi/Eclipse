@@ -156,7 +156,8 @@ export default function MoodTracker() {
     return {
       mostCommonMood,
       positivityPercentage,
-      totalEntries: recentMoods.length
+      totalEntries: recentMoods.length,
+      moodDistribution: moodCounts
     };
   };
   
@@ -179,16 +180,17 @@ export default function MoodTracker() {
         />
       ))}
       
+      <motion.div 
+        className="mood-header"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <h1>Mood Tracker <span className="transition-icon">🌑</span></h1>
+        <p>Track your emotional journey through the cosmos</p>
+      </motion.div>
+
       <div className="mood-container">
-        <motion.h1 
-          className="mood-title"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2 }}
-        >
-          Mood Tracker <span className="moon-icon">🌙</span>
-        </motion.h1>
-        
         <div className="navigation-tabs">
           <button 
             className={`tab ${activeTab === 'tracker' ? 'active' : ''}`}
@@ -286,7 +288,16 @@ export default function MoodTracker() {
             <h3 className="section-title">Your Mood History</h3>
             
             {moodHistory.length === 0 ? (
-              <p className="empty-state">No mood entries yet. Track your first mood!</p>
+              <div className="insight-placeholder">
+                <div className="placeholder-icon">📝</div>
+                <p>No mood entries yet. Track your first mood!</p>
+                <button 
+                  className="start-tracking-btn"
+                  onClick={() => setActiveTab('tracker')}
+                >
+                  Start Tracking
+                </button>
+              </div>
             ) : (
               <div className="history-items">
                 {moodHistory.map((entry, index) => (
@@ -320,54 +331,100 @@ export default function MoodTracker() {
             <h3 className="section-title">Your Mood Insights</h3>
             
             {!moodInsights ? (
-              <p className="empty-state">Track more moods to see insights</p>
+              <div className="insight-placeholder">
+                <div className="placeholder-icon">🔭</div>
+                <p>Track more moods to unlock cosmic insights</p>
+                <button 
+                  className="start-tracking-btn"
+                  onClick={() => setActiveTab('tracker')}
+                >
+                  Start Tracking
+                </button>
+              </div>
             ) : (
-              <div className="insights-grid">
-                <div className="insight-card">
-                  <div className="insight-value">{moodInsights.totalEntries}</div>
-                  <div className="insight-label">Moods Tracked This Week</div>
+              <>
+                <div className="insights-overview">
+                  <div className="overview-card">
+                    <div className="overview-value">{moodInsights.totalEntries}</div>
+                    <div className="overview-label">Moods Tracked</div>
+                    <div className="overview-period">This Week</div>
+                  </div>
+                  
+                  <div className="overview-card">
+                    <div className="overview-value">{moodInsights.mostCommonMood}</div>
+                    <div className="overview-label">Most Common Mood</div>
+                    <div className="overview-period">Recent Days</div>
+                  </div>
+                  
+                  <div className="overview-card">
+                    <div className="overview-value">{moodInsights.positivityPercentage}%</div>
+                    <div className="overview-label">Positive Days</div>
+                    <div className="overview-period">Overall</div>
+                  </div>
                 </div>
                 
-                <div className="insight-card">
-                  <div className="insight-value">{moodInsights.mostCommonMood}</div>
-                  <div className="insight-label">Most Common Mood</div>
-                </div>
-                
-                <div className="insight-card">
-                  <div className="insight-value">{moodInsights.positivityPercentage}%</div>
-                  <div className="insight-label">Positive Days</div>
-                </div>
-              </div>
-            )}
-            
-            <div className="insights-graph">
-              <h4>Weekly Mood Distribution</h4>
-              <div className="graph-bars">
-                {moods.map(mood => {
-                  const moodCount = moodHistory.filter(entry => 
-                    entry.mood.label === mood.label
-                  ).length;
-                  
-                  const maxHeight = 150;
-                  const height = moodCount > 0 ? Math.max(30, (moodCount / moodHistory.length) * maxHeight) : 0;
-                  
-                  return (
-                    <div key={mood.label} className="bar-container">
-                      <div 
-                        className="mood-bar" 
-                        style={{ 
-                          height: `${height}px`,
-                          backgroundColor: mood.color
-                        }}
-                      >
-                        <span className="bar-count">{moodCount}</span>
-                      </div>
-                      <div className="bar-label">{mood.label}</div>
+                <div className="insights-graph">
+                  <div className="graph-header">
+                    <h4>Weekly Mood Distribution</h4>
+                    <div className="graph-legend">
+                      {moods.map(mood => (
+                        <div key={mood.label} className="legend-item">
+                          <div className="legend-color" style={{ backgroundColor: mood.color }}></div>
+                          <span>{mood.label}</span>
+                        </div>
+                      ))}
                     </div>
-                  );
-                })}
-              </div>
-            </div>
+                  </div>
+                  
+                  <div className="graph-bars">
+                    {moods.map(mood => {
+                      const moodCount = moodInsights.moodDistribution[mood.label] || 0;
+                      const maxHeight = 150;
+                      const percentage = moodCount > 0 ? (moodCount / moodHistory.length) * 100 : 0;
+                      const height = Math.max(30, (percentage / 100) * maxHeight);
+                      
+                      return (
+                        <div key={mood.label} className="bar-container">
+                          <div className="bar-value">{moodCount}</div>
+                          <motion.div 
+                            className="mood-bar" 
+                            style={{ backgroundColor: mood.color }}
+                            initial={{ height: 0 }}
+                            animate={{ height: `${height}px` }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                          >
+                            <div className="bar-percentage">{Math.round(percentage)}%</div>
+                          </motion.div>
+                          <div className="bar-label">
+                            <span className="mood-emoji-small">{mood.emoji}</span>
+                            <span>{mood.label}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+                
+                <div className="mood-trends">
+                  <h4>Your Mood Pattern</h4>
+                  <div className="trends-grid">
+                    {moodHistory.slice(0, 7).map((entry, index) => (
+                      <div key={index} className="trend-day">
+                        <div className="trend-date">
+                          {new Date(entry.timestamp).toLocaleDateString('en-US', { weekday: 'short' })}
+                        </div>
+                        <div 
+                          className="trend-mood" 
+                          style={{ backgroundColor: entry.mood.color }}
+                        >
+                          {entry.mood.emoji}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         )}
 
